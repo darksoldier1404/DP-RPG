@@ -1,0 +1,19 @@
+Stats:
+  MaxHp: 100
+  MaxArmor: 100
+  MaxProjectileArmor: 100
+  MaxDamage: 100
+  MaxProjectileDamage: 100
+  MaxCriticalChance: 100
+  MaxCriticalDamage: 100
+  MaxSpeed: 100
+  MaxLifeSteal: 100
+  hpPerStat: 1
+  armorPerStat: 1
+  projectileArmorPerStat: 1
+  damagePerStat: 1
+  projectileDamagePerStat: 1
+  criticalChancePerStat: 1
+  criticalDamagePerStat: 1
+  speedPerStat: 1
+  lifeStealPerStat: 1

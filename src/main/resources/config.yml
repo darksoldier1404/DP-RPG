@@ -1,0 +1,7 @@
+Settings:
+  prefix: "&f[ &eDPR &f] "
+
+Mobs:
+  TestMob:
+    base: 100
+    perlv: 50
