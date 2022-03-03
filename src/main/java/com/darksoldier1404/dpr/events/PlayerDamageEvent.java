@@ -48,6 +48,7 @@ public class PlayerDamageEvent implements Listener {
                 int stat = rp.getStat().getProjectileDamage();
                 if(stat == 0) return;
                 double pDamage = sv.getProjectileDamagePerStat()*stat;
+                pDamage = calcCritical(rp, pDamage);
                 e.setDamage(e.getDamage() + pDamage);
                 lifeSteal(rp);
                 return;
@@ -59,9 +60,22 @@ public class PlayerDamageEvent implements Listener {
             int stat = rp.getStat().getDamage();
             if(stat == 0) return;
             double pDamage = sv.getDamagePerStat()*stat;
+            pDamage = calcCritical(rp, pDamage);
             e.setDamage(e.getDamage() + pDamage);
             lifeSteal(rp);
         }
+    }
+
+    public double calcCritical(RPlayer rp, double damage) {
+        int stat = rp.getStat().getCriticalChance();
+        if(stat == 0) return damage;
+        double crit = sv.getCriticalChancePerStat()*stat;
+        double critChance = crit/100;
+        double random = Math.random();
+        if(random <= critChance) {
+            damage = damage*sv.getCriticalDamagePerStat();
+        }
+        return damage;
     }
 
     public void lifeSteal(RPlayer rp) {

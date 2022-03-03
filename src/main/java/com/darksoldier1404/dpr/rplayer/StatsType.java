@@ -11,4 +11,5 @@ public enum StatsType {
     CRITICAL_DAMAGE,
     SPEED,
     LIFESTEAL,
+    POINT
 }

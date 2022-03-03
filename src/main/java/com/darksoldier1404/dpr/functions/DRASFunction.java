@@ -29,6 +29,7 @@ public class DRASFunction {
     public static void addStat(StatsType type, Player p) {
         RPlayer rp = rplayers.get(p.getUniqueId());
         Stats st = rp.getStat();
+        if(type == StatsType.POINT) return;
         st.addStat(type, p);
     }
 }

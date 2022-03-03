@@ -18,7 +18,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 
+import java.io.StringWriter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -122,8 +124,6 @@ public class DRAUFunction {
             ItemStack item = new ItemStack(Material.BOOK);
             ItemMeta im = item.getItemMeta();
             im.setDisplayName("§b" + type.name());
-            im.setLore(Arrays.asList("아이템 편집 플러그인으로 정보를 수정할 수 있습니다."
-                    , "you can edit this item with the Item Edit plugins."));
             item.setItemMeta(im);
             item = NBT.setStringTag(item, "statsType", type.name());
             p.getInventory().addItem(item);
@@ -149,8 +149,28 @@ public class DRAUFunction {
         DInventory inv = new DInventory(null, p.getName() + "의 스텟 정보", 9 * config.getInt("Settings.StatsGUILine"), plugin);
         inv.setObj(readOnly);
         for (int i = 0; i < 9 * config.getInt("Settings.StatsGUILine"); i++) {
-            inv.setItem(i, statsItems.getItemStack("ItemStack.StatsItems." + i));
+            ItemStack item = statsItems.getItemStack("ItemStack.StatsItems." + i);
+            if(NBT.hasTagKey(item, "statsType")) {
+                item = initPlaceholder(StatsType.valueOf(NBT.getStringTag(item, "statsType")), rplayers.get(p.getUniqueId()), item);
+                inv.setItem(i, item);
+            }
+            inv.setItem(i, item);
         }
         p.openInventory(inv);
+    }
+
+    public static ItemStack initPlaceholder(StatsType type, RPlayer rp, ItemStack item) {
+        if (item == null) {
+            item = new ItemStack(Material.STONE);
+        }
+        ItemMeta im = item.getItemMeta();
+        im.setDisplayName(im.getDisplayName().replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
+        List<String> lore = im.getLore();
+        for(int i = 0; i < lore.size(); i++) {
+            lore.set(i, lore.get(i).replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
+        }
+        im.setLore(lore);
+        item.setItemMeta(im);
+        return item;
     }
 }

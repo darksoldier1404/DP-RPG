@@ -124,6 +124,21 @@ public class Stats {
         p.sendMessage(DRPG.getInstance().prefix + "스텟 포인트가 부족합니다.");
     }
 
+    public int getStat(StatsType type) {
+        return switch (type) {
+            case HP -> hp;
+            case ARMOR -> armor;
+            case PROJECTILE_ARMOR -> projectileArmor;
+            case DAMAGE -> damage;
+            case PROJECTILE_DAMAGE -> projectileDamage;
+            case CRITICAL_CHANCE -> criticalChance;
+            case CRITICAL_DAMAGE -> criticalDamage;
+            case SPEED -> speed;
+            case LIFESTEAL -> lifeSteal;
+            case POINT -> point;
+        };
+    }
+
     public int getPoint() {
         return point;
     }
