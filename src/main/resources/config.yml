@@ -1,5 +1,6 @@
 Settings:
   prefix: "&f[ &eDPR &f] "
+  StatsGUILine: 6
 
 Mobs:
   TestMob:

@@ -4,8 +4,10 @@ import com.darksoldier1404.dppc.DPPCore;
 import com.darksoldier1404.dppc.utils.ConfigUtils;
 import com.darksoldier1404.dpr.commands.DRAdminCommand;
 import com.darksoldier1404.dpr.commands.DRAdminMobCommand;
+import com.darksoldier1404.dpr.commands.DRUserCommand;
 import com.darksoldier1404.dpr.events.DREvent;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
+import com.darksoldier1404.dpr.rplayer.StatValue;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -21,8 +23,12 @@ public class DRPG extends JavaPlugin {
     private static DRPG plugin;
     public YamlConfiguration config;
     public YamlConfiguration levels;
+    public YamlConfiguration stats;
+    public YamlConfiguration statsItems;
     public String prefix;
     public Map<UUID, RPlayer> rplayers = new HashMap<>();
+    public StatValue statValue;
+    public int levelUpStatPoint;
 
     public static DRPG getInstance() {
         return plugin;
@@ -43,10 +49,16 @@ public class DRPG extends JavaPlugin {
         prefix = ChatColor.translateAlternateColorCodes('&', config.getString("Settings.prefix"));
         saveResource("level.yml", false);
         saveResource("stats.yml", false);
+        saveResource("statsItems.yml", false);
         levels = ConfigUtils.loadCustomData(plugin, "level");
+        stats = ConfigUtils.loadCustomData(plugin, "stats");
+        statsItems = ConfigUtils.loadCustomData(plugin, "statsItems");
+        statValue = new StatValue(stats);
+        levelUpStatPoint = stats.getInt("Stats.LevelUpStatPoint");
         getServer().getPluginManager().registerEvents(new DREvent(), plugin);
         getCommand("dpra").setExecutor(new DRAdminCommand());
         getCommand("dprm").setExecutor(new DRAdminMobCommand());
+        getCommand("dstats").setExecutor(new DRUserCommand());
     }
 
     @Override

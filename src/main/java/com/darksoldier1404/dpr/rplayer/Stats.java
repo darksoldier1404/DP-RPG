@@ -1,9 +1,16 @@
 package com.darksoldier1404.dpr.rplayer;
 
+import com.darksoldier1404.dpr.DRPG;
+import com.darksoldier1404.dpr.events.obj.StatLevelUPEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 @SuppressWarnings("unused")
 public class Stats {
+    private final StatValue sv;
     private int point;
     private int hp;
     private int armor;
@@ -34,6 +41,87 @@ public class Stats {
         this.maxCriticalDamage = data.getInt("Stats.MaxCriticalDamage");
         this.maxSpeed = data.getInt("Stats.MaxSpeed");
         this.maxLifeSteal = data.getInt("Stats.MaxLifeSteal");
+        sv = DRPG.getInstance().statValue;
+    }
+
+    public void init(Player p) {
+        StatValue sv = DRPG.getInstance().statValue;
+        p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + (hp * sv.getHpPerStat()));
+        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() + (sv.getSpeedPerStat() * speed));
+    }
+
+    public void playSound(Player p) {
+        p.getWorld().playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
+    }
+
+    public void addStat(StatsType type, Player p) {
+        Bukkit.getServer().getPluginManager().callEvent(new StatLevelUPEvent(p, this, type));
+        switch (type) {
+            case HP:
+                if (point >= sv.getHpPerStat()) {
+                    hp++;
+                    point -= sv.getHpPerStat();
+                    playSound(p);
+                    return;
+                }
+            case ARMOR:
+                if (point >= sv.getArmorPerStat()) {
+                    armor++;
+                    point -= sv.getArmorPerStat();
+                    playSound(p);
+                    return;
+                }
+            case PROJECTILE_ARMOR:
+                if (point >= sv.getProjectileArmorPerStat()) {
+                    projectileArmor++;
+                    point -= sv.getProjectileArmorPerStat();
+                    playSound(p);
+                    return;
+                }
+            case DAMAGE:
+                if (point >= sv.getDamagePerStat()) {
+                    damage++;
+                    point -= sv.getDamagePerStat();
+                    playSound(p);
+                    return;
+                }
+            case PROJECTILE_DAMAGE:
+                if (point >= sv.getProjectileDamagePerStat()) {
+                    projectileDamage++;
+                    point -= sv.getProjectileDamagePerStat();
+                    playSound(p);
+                    return;
+                }
+            case CRITICAL_CHANCE:
+                if (point >= sv.getCriticalChancePerStat()) {
+                    criticalChance++;
+                    point -= sv.getCriticalChancePerStat();
+                    playSound(p);
+                    return;
+                }
+            case CRITICAL_DAMAGE:
+                if (point >= sv.getCriticalDamagePerStat()) {
+                    criticalDamage++;
+                    point -= sv.getCriticalDamagePerStat();
+                    playSound(p);
+                    return;
+                }
+            case SPEED:
+                if (point >= sv.getSpeedPerStat()) {
+                    speed++;
+                    point -= sv.getSpeedPerStat();
+                    playSound(p);
+                    return;
+                }
+            case LIFESTEAL:
+                if (point >= sv.getLifeStealPerStat()) {
+                    lifeSteal++;
+                    point -= sv.getLifeStealPerStat();
+                    playSound(p);
+                    return;
+                }
+        }
+        p.sendMessage(DRPG.getInstance().prefix + "스텟 포인트가 부족합니다.");
     }
 
     public int getPoint() {
@@ -152,3 +240,4 @@ public class Stats {
         return maxLifeSteal;
     }
 }
+
