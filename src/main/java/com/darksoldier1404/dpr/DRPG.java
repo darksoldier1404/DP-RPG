@@ -6,6 +6,7 @@ import com.darksoldier1404.dpr.commands.DRAdminCommand;
 import com.darksoldier1404.dpr.commands.DRAdminMobCommand;
 import com.darksoldier1404.dpr.commands.DRUserCommand;
 import com.darksoldier1404.dpr.events.DREvent;
+import com.darksoldier1404.dpr.events.PlayerDamageEvent;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
 import com.darksoldier1404.dpr.rplayer.StatValue;
 import org.bukkit.ChatColor;
@@ -56,6 +57,7 @@ public class DRPG extends JavaPlugin {
         statValue = new StatValue(stats);
         levelUpStatPoint = stats.getInt("Stats.LevelUpStatPoint");
         getServer().getPluginManager().registerEvents(new DREvent(), plugin);
+        getServer().getPluginManager().registerEvents(new PlayerDamageEvent(), plugin);
         getCommand("dpra").setExecutor(new DRAdminCommand());
         getCommand("dprm").setExecutor(new DRAdminMobCommand());
         getCommand("dstats").setExecutor(new DRUserCommand());

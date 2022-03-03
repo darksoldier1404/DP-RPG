@@ -3,7 +3,6 @@ package com.darksoldier1404.dpr.events;
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
 import com.darksoldier1404.dpr.rplayer.StatValue;
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -14,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerDamagedEvent implements Listener {
+public class PlayerDamageEvent implements Listener {
     private final DRPG plugin = DRPG.getInstance();
     private final Map<UUID, RPlayer> rplayers = plugin.rplayers;
     private final StatValue sv = plugin.statValue;
@@ -50,6 +49,7 @@ public class PlayerDamagedEvent implements Listener {
                 if(stat == 0) return;
                 double pDamage = sv.getProjectileDamagePerStat()*stat;
                 e.setDamage(e.getDamage() + pDamage);
+                lifeSteal(rp);
                 return;
             }
         }
@@ -60,7 +60,20 @@ public class PlayerDamagedEvent implements Listener {
             if(stat == 0) return;
             double pDamage = sv.getDamagePerStat()*stat;
             e.setDamage(e.getDamage() + pDamage);
+            lifeSteal(rp);
         }
+    }
 
+    public void lifeSteal(RPlayer rp) {
+        Player p = rp.getPlayer();
+        double health = p.getHealth();
+        int stat = rp.getStat().getLifeSteal();
+        if(stat == 0) return;
+        double steal = sv.getLifeStealPerStat()*stat;
+        if(p.getMaxHealth() < health + steal) {
+            p.setHealth(p.getMaxHealth());
+        }else{
+            p.setHealth(health + steal);
+        }
     }
 }

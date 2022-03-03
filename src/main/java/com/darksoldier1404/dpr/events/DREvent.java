@@ -65,6 +65,7 @@ public class DREvent implements Listener {
             Player p = (Player) e.getKiller();
             double level = e.getMobLevel();
             double base = config.getDouble("Mobs." + e.getMobType().getInternalName() + ".base");
+            if(base == 0) return;
             double perlv = config.getDouble("Mobs." + e.getMobType().getInternalName() + ".perlv");
             if (perlv == 0) {
                 DRAUFunction.addExp(p, base);
