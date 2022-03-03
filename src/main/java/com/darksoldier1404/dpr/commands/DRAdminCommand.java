@@ -31,15 +31,60 @@ public class DRAdminCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(prefix + "/dpra exp sub <유저> <경험치> : 해당 유저의 경험치를 내립니다.");
             sender.sendMessage(prefix + "/dpra exp set <유저> <경험치> : 해당 유저의 경험치를 설정합니다.");
             sender.sendMessage(prefix + "/dpra exp get <유저> : 해당 유저의 경험치를 확인합니다.");
-            sender.sendMessage(prefix + "/dpra stat display : 스텟창을 설정합니다.");
             sender.sendMessage(prefix + "/dpra stat line <1~6> : 스텟창의 행을 설정합니다.");
             sender.sendMessage(prefix + "/dpra stat getitem : 스텟창 설정 아이템을 받습니다.");
+            sender.sendMessage(prefix + "/dpra stat display : 스텟창을 설정합니다.");
             sender.sendMessage(prefix + "/dpra stat add <유저> <스텟> : 해당 유저의 스텟을 올립니다.");
             sender.sendMessage(prefix + "/dpra stat sub <유저> <스텟> : 해당 유저의 스텟을 내립니다.");
             sender.sendMessage(prefix + "/dpra stat set <유저> <스텟> : 해당 유저의 스텟을 설정합니다.");
             sender.sendMessage(prefix + "/dpra stat check <유저> : 해당 유저의 스텟을 확인합니다.");
             sender.sendMessage(prefix + "/dpra reload/rl : 모든 콘피그 설정을 리로드 합니다.");
             return true;
+        }
+        if(args[0].equalsIgnoreCase("stat")) {
+            if(args.length == 1) {
+                sender.sendMessage(prefix + "옵션을 선택해주세요.");
+                sender.sendMessage(prefix + "line, getitem, display, add, sub, set, check");
+                return false;
+            }
+            if(args[1].equalsIgnoreCase("line")) {
+                if(args.length == 2) {
+                    sender.sendMessage(prefix + "줄 수를 입력해주세요, 1~6 사이입니다.");
+                    return false;
+                }
+                if(args.length == 3) {
+                    try{
+                        int line = Integer.parseInt(args[2]);
+                        if(line <= 1 || line >= 6) {
+                            plugin.config.set("Settings.StatsGUILine", line);
+                            return false;
+                        }else{
+                            sender.sendMessage(prefix + "줄은 1~6 이여야 합니다.");
+                            return false;
+                        }
+                    }catch (NumberFormatException e) {
+                        sender.sendMessage(prefix + "옳바르지 않은 숫자입니다.");
+                        return false;
+                    }
+                }
+                return false;
+            }
+            if(args[1].equalsIgnoreCase("getitem")) {
+                if(!(sender instanceof Player)) {
+                    sender.sendMessage(prefix + "플레이어만 사용 가능한 명령어 입니다.");
+                    return false;
+                }
+                DRAUFunction.getAllStatsItems((Player) sender);
+                return false;
+            }
+            if(args[1].equalsIgnoreCase("display")) {
+                if(!(sender instanceof Player)) {
+                    sender.sendMessage(prefix + "플레이어만 사용 가능한 명령어 입니다.");
+                    return false;
+                }
+                DRAUFunction.openStatsItemSettings((Player) sender);
+                return false;
+            }
         }
         if(args[0].equalsIgnoreCase("rl") || args[0].equalsIgnoreCase("reload")) {
             DRAUFunction.reloadConfigs();
