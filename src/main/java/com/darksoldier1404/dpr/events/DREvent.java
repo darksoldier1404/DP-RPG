@@ -20,12 +20,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("all")
 public class DREvent implements Listener {
     private final DRPG plugin = DRPG.getInstance();
     private final Map<UUID, RPlayer> rplayers = plugin.rplayers;
@@ -57,6 +59,12 @@ public class DREvent implements Listener {
         rp.saveData();
         ConfigUtils.saveCustomData(plugin, rp.getData(), p.getUniqueId() + ".yml", "rplayers");
         rplayers.remove(p.getUniqueId());
+    }
+
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent e) {
+        RPlayer rp = rplayers.get(e.getPlayer().getUniqueId());
+        e.setFormat("§f[ §6LV.§e" + rp.getLevel() + " §f]" + e.getFormat());
     }
 
     @EventHandler

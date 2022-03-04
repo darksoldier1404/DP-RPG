@@ -8,7 +8,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("all")
 public class Stats {
     private final StatValue sv;
     private int point;
@@ -55,6 +55,7 @@ public class Stats {
     }
 
     public void addStat(StatsType type, Player p) {
+        System.out.println("addStat : " + type);
         Bukkit.getServer().getPluginManager().callEvent(new StatLevelUPEvent(p, this, type));
         switch (type) {
             case HP:

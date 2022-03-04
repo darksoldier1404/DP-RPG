@@ -1,6 +1,5 @@
 package com.darksoldier1404.dpr.events.obj;
 
-import com.darksoldier1404.dpr.rplayer.RPlayer;
 import com.darksoldier1404.dpr.rplayer.Stats;
 import com.darksoldier1404.dpr.rplayer.StatsType;
 import org.bukkit.entity.Player;

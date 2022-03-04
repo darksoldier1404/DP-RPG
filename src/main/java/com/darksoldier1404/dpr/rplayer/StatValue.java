@@ -2,7 +2,6 @@ package com.darksoldier1404.dpr.rplayer;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-@SuppressWarnings("unused")
 public class StatValue {
     private final double hpPerStat;
     private final double armorPerStat;

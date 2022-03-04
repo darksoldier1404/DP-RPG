@@ -7,6 +7,7 @@ import com.darksoldier1404.dpr.commands.DRAdminMobCommand;
 import com.darksoldier1404.dpr.commands.DRUserCommand;
 import com.darksoldier1404.dpr.events.DREvent;
 import com.darksoldier1404.dpr.events.PlayerDamageEvent;
+import com.darksoldier1404.dpr.functions.DRAUFunction;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
 import com.darksoldier1404.dpr.rplayer.StatValue;
 import org.bukkit.ChatColor;
@@ -70,5 +71,6 @@ public class DRPG extends JavaPlugin {
             ConfigUtils.saveCustomData(plugin, rp.getData(), rp.getPlayer().getUniqueId()+".yml", "rplayers");
         }
         rplayers.clear();
+        DRAUFunction.saveConfigs();
     }
 }

@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("all")
 public class PlayerDamageEvent implements Listener {
     private final DRPG plugin = DRPG.getInstance();
     private final Map<UUID, RPlayer> rplayers = plugin.rplayers;

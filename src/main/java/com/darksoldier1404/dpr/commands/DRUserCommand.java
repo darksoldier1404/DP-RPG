@@ -2,7 +2,6 @@ package com.darksoldier1404.dpr.commands;
 
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.functions.DRAUFunction;
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

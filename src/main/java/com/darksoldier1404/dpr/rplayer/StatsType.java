@@ -1,6 +1,5 @@
 package com.darksoldier1404.dpr.rplayer;
 
-@SuppressWarnings("unused")
 public enum StatsType {
     HP,
     ARMOR,

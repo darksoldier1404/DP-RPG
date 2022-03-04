@@ -18,12 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 
-import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@SuppressWarnings("all")
 public class DRAUFunction {
     private static final DRPG plugin = DRPG.getInstance();
     private static final YamlConfiguration config = plugin.config;
@@ -112,11 +111,17 @@ public class DRAUFunction {
     }
 
     public static void reloadConfigs() {
-        plugin.config = ConfigUtils.reloadPluginConfig(plugin, config);
+        plugin.config = ConfigUtils.reloadPluginConfig(plugin, plugin.config);
+        plugin.levels = ConfigUtils.reloadPluginConfig(plugin, plugin.levels);
+        plugin.stats = ConfigUtils.reloadPluginConfig(plugin, plugin.stats);
+        plugin.statsItems = ConfigUtils.reloadPluginConfig(plugin, plugin.statsItems);
     }
 
     public static void saveConfigs() {
-        ConfigUtils.savePluginConfig(plugin, config);
+        ConfigUtils.savePluginConfig(plugin, plugin.config);
+        ConfigUtils.saveCustomData(plugin, plugin.levels, "levels");
+        ConfigUtils.saveCustomData(plugin, plugin.statsItems, "statsItems");
+        ConfigUtils.saveCustomData(plugin, plugin.stats, "stats");
     }
 
     public static void getAllStatsItems(Player p) {
@@ -153,6 +158,7 @@ public class DRAUFunction {
             if(NBT.hasTagKey(item, "statsType")) {
                 item = initPlaceholder(StatsType.valueOf(NBT.getStringTag(item, "statsType")), rplayers.get(p.getUniqueId()), item);
                 inv.setItem(i, item);
+                continue;
             }
             inv.setItem(i, item);
         }
@@ -160,8 +166,8 @@ public class DRAUFunction {
     }
 
     public static ItemStack initPlaceholder(StatsType type, RPlayer rp, ItemStack item) {
-        if (item == null) {
-            item = new ItemStack(Material.STONE);
+        if(item.hasItemMeta()) {
+            if(!item.getItemMeta().hasLore()) return item;
         }
         ItemMeta im = item.getItemMeta();
         im.setDisplayName(im.getDisplayName().replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
