@@ -130,6 +130,7 @@ public class DREvent implements Listener {
                         if (NBT.hasTagKey(e.getCurrentItem(), "statsType")) {
                             StatsType type = StatsType.valueOf(NBT.getStringTag(e.getCurrentItem(), "statsType"));
                             DRASFunction.addStat(type, (Player) e.getWhoClicked());
+                            DRAUFunction.openStatGUI((Player) e.getWhoClicked(), (boolean) inv.getObj());
                         }
                     }
                 }
