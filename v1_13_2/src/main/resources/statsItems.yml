@@ -1,0 +1,10 @@
+ItemStack:
+  hpItemStack:
+  armorItemStack:
+  projectileArmorItemStack:
+  damageItemStack:
+  projectileDamageItemStack:
+  criticalChanceItemStack:
+  criticalDamageItemStack:
+  speedItemStack:
+  lifeStealItemStack:
