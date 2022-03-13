@@ -26,6 +26,12 @@ public class DRAdminMobCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(prefix + "/dprm exp perlv <mob> <exp> : 해당 몹의 레벨당 드랍 경험치를 설정합니다.");
             sender.sendMessage(prefix + "EX) TestMob (base exp 100, perlv exp 50) LV.1 = 100, LV.3 = 200");
             sender.sendMessage(prefix + "perlv 설정을 하지 않으면 모든 레벨에 동일한 base 경험치를 드랍합니다.");
+            sender.sendMessage(prefix + "/dprm seal chance <mob> : 해당 몹의 도감 드롭 확률을 설정합니다.");
+            sender.sendMessage(prefix + "설정하지 않거나 0으로 설정하면 드랍하지 않습니다.");
+            sender.sendMessage(prefix + "/dprm seal reword <mob> <exp/cmd> <add/del/list> <args> : 해당 몹의 도감 등록시 보상을 설정합니다.");
+            sender.sendMessage(prefix + "EX) /dprm seal reword TestMob exp add 100 - 숫자만 증가");
+            sender.sendMessage(prefix + "EX) /dprm seal reword TestMob cmd add give <player> diamond 1 - 커맨드 다중 등록");
+            sender.sendMessage(prefix + "커맨드 보상은 관리자 권한으로 실행됩니다.");
             return true;
         }
         if(args[0].equalsIgnoreCase("exp")) {
@@ -56,6 +62,20 @@ public class DRAdminMobCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(prefix + "명령어가 옳바르지 않습니다.");
             return true;
         }
+        if(args[0].equalsIgnoreCase("seal")) {
+            if(args.length == 1) {
+                sender.sendMessage(prefix + "몹을 선택해주세요.");
+                return false;
+            }
+            if(args.length == 2) {
+                sender.sendMessage(prefix + "도감 드롭 확률을 설정해주세요.");
+                return false;
+            }
+            if(args.length == 3) {
+                DRAUFunction.setSealChance(sender, args[1], args[2]);
+                return false;
+            }
+        }
         return false;
     }
 
@@ -65,9 +85,12 @@ public class DRAdminMobCommand implements CommandExecutor, TabCompleter {
             return null;
         }
         if(args.length == 1) {
-            return Arrays.asList("exp");
+            return Arrays.asList("exp", "seal");
         }
         if(args.length == 2) {
+            if(args[0].equalsIgnoreCase("seal")) {
+                return Arrays.asList("reword");
+            }
             return Arrays.asList("base", "perlv");
         }
         if(args.length == 3) {

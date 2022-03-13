@@ -1,4 +1,4 @@
-package com.darksoldier1404.dpr.rplayer;
+package com.darksoldier1404.dpr.enums;
 
 public enum StatsType {
     HP,

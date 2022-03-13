@@ -4,12 +4,14 @@ import com.darksoldier1404.dppc.api.inventory.DInventory;
 import com.darksoldier1404.dppc.utils.ConfigUtils;
 import com.darksoldier1404.dppc.utils.NBT;
 import com.darksoldier1404.dpr.DRPG;
+import com.darksoldier1404.dpr.enums.SealType;
 import com.darksoldier1404.dpr.events.obj.RPlayerExpGainEvent;
 import com.darksoldier1404.dpr.events.obj.RPlayerLevelUPEvent;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
-import com.darksoldier1404.dpr.rplayer.StatsType;
+import com.darksoldier1404.dpr.enums.StatsType;
 import io.lumine.xikage.mythicmobs.MythicMobs;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -107,6 +109,7 @@ public class DRAUFunction {
         plugin.levels = ConfigUtils.reloadPluginConfig(plugin, plugin.levels);
         plugin.stats = ConfigUtils.reloadPluginConfig(plugin, plugin.stats);
         plugin.statsItems = ConfigUtils.reloadPluginConfig(plugin, plugin.statsItems);
+        plugin.seal = ConfigUtils.reloadPluginConfig(plugin, plugin.seal);
     }
 
     public static void saveConfigs() {
@@ -114,6 +117,7 @@ public class DRAUFunction {
         ConfigUtils.saveCustomData(plugin, plugin.levels, "levels");
         ConfigUtils.saveCustomData(plugin, plugin.statsItems, "statsItems");
         ConfigUtils.saveCustomData(plugin, plugin.stats, "stats");
+        ConfigUtils.saveCustomData(plugin, plugin.seal, "seal");
     }
 
     public static void getAllStatsItems(Player p) {
@@ -147,7 +151,7 @@ public class DRAUFunction {
         inv.setObj(readOnly);
         for (int i = 0; i < 9 * plugin.config.getInt("Settings.StatsGUILine"); i++) {
             ItemStack item = plugin.statsItems.getItemStack("ItemStack.StatsItems." + i);
-            if(NBT.hasTagKey(item, "statsType")) {
+            if (NBT.hasTagKey(item, "statsType")) {
                 item = initPlaceholder(StatsType.valueOf(NBT.getStringTag(item, "statsType")), plugin.rplayers.get(p.getUniqueId()), item);
                 inv.setItem(i, item);
                 continue;
@@ -158,17 +162,77 @@ public class DRAUFunction {
     }
 
     public static ItemStack initPlaceholder(StatsType type, RPlayer rp, ItemStack item) {
-        if(item.hasItemMeta()) {
-            if(!item.getItemMeta().hasLore()) return item;
+        if (item.hasItemMeta()) {
+            if (!item.getItemMeta().hasLore()) return item;
         }
         ItemMeta im = item.getItemMeta();
         im.setDisplayName(im.getDisplayName().replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
         List<String> lore = im.getLore();
-        for(int i = 0; i < lore.size(); i++) {
+        for (int i = 0; i < lore.size(); i++) {
             lore.set(i, lore.get(i).replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
         }
         im.setLore(lore);
         item.setItemMeta(im);
+        return item;
+    }
+
+    public static ItemStack initPlaceholder(SealType type, RPlayer rp, ItemStack item) {
+        if (item.hasItemMeta()) {
+            if (!item.getItemMeta().hasLore()) return item;
+        }
+        ItemMeta im = item.getItemMeta();
+        im.setDisplayName(im.getDisplayName().replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
+        List<String> lore = im.getLore();
+        for (int i = 0; i < lore.size(); i++) {
+            lore.set(i, lore.get(i).replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
+        }
+        im.setLore(lore);
+        item.setItemMeta(im);
+        return item;
+    }
+
+    public static void setSealChance(CommandSender sender, String mob, String sChance) {
+        double chance = 0;
+        try {
+            chance = Double.parseDouble(sChance);
+        } catch (NumberFormatException e) {
+            sender.sendMessage(plugin.prefix + "옳바르지 않은 값입니다.");
+            return;
+        }
+        if (chance == 0) {
+            sender.sendMessage(plugin.prefix + mob + "몹의 도감 드롭을 제거하였습니다.");
+            plugin.config.set("Seal." + mob + ".chance", null);
+            return;
+        }
+        if (chance > 0) {
+            sender.sendMessage(plugin.prefix + mob + "몹의 도감 드롭 확률을 " + chance + "로 설정하였습니다.");
+            plugin.config.set("Seal." + mob + ".chance", chance);
+        }
+    }
+
+    public static void openSeal(Player p, String mob) {
+        DInventory inv = new DInventory(null, mob + "의 도감", 9 * plugin.config.getInt("Settings.SealGUILine"), plugin);
+        inv.setObj(mob);
+        for (int i = 0; i < 9 * plugin.config.getInt("Settings.SealGUILine"); i++) {
+            ItemStack item = plugin.seal.getItemStack("ItemStack.Seal." + i);
+            if (NBT.hasTagKey(item, "sealType")) {
+                item = initPlaceholder(SealType.valueOf(NBT.getStringTag(item, "sealType")), plugin.rplayers.get(p.getUniqueId()), item);
+                inv.setItem(i, item);
+                continue;
+            }
+            inv.setItem(i, item);
+        }
+        p.openInventory(inv);
+    }
+
+    public static ItemStack dropSeal(Player p, Location loc) {
+        ItemStack item = plugin.seal.getItemStack("ItemStack.Seal.0");
+        if (NBT.hasTagKey(item, "sealType")) {
+            item = initPlaceholder(SealType.valueOf(NBT.getStringTag(item, "sealType")), plugin.rplayers.get(p.getUniqueId()), item);
+            loc.getWorld().dropItem(loc, item);
+            return item;
+        }
+        loc.getWorld().dropItem(loc, item);
         return item;
     }
 }

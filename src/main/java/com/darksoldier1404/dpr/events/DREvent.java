@@ -10,7 +10,7 @@ import com.darksoldier1404.dpr.events.obj.StatLevelUPEvent;
 import com.darksoldier1404.dpr.functions.DRASFunction;
 import com.darksoldier1404.dpr.functions.DRAUFunction;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
-import com.darksoldier1404.dpr.rplayer.StatsType;
+import com.darksoldier1404.dpr.enums.StatsType;
 import io.lumine.xikage.mythicmobs.api.bukkit.events.MythicMobDeathEvent;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
