@@ -3,7 +3,7 @@ package com.darksoldier1404.dpr.functions;
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
 import com.darksoldier1404.dpr.rplayer.Stats;
-import com.darksoldier1404.dpr.enums.StatsType;
+import com.darksoldier1404.dpr.rplayer.StatsType;
 import org.bukkit.entity.Player;
 
 @SuppressWarnings("all")

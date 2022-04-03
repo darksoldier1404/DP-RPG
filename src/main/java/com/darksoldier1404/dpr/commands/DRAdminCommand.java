@@ -38,7 +38,6 @@ public class DRAdminCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(prefix + "/dpra stat sub <유저> <스텟> : 해당 유저의 스텟을 내립니다.");
             sender.sendMessage(prefix + "/dpra stat set <유저> <스텟> : 해당 유저의 스텟을 설정합니다.");
             sender.sendMessage(prefix + "/dpra stat check <유저> : 해당 유저의 스텟을 확인합니다.");
-            sender.sendMessage(prefix + "/dpra seal chance <mob> : 해당 몹의 도감 드롭 확률을 설정합니다.");
             sender.sendMessage(prefix + "/dpra reload/rl : 모든 콘피그 설정을 리로드 합니다.");
             return true;
         }

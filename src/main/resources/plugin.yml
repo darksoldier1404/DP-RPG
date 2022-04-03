@@ -1,7 +1,7 @@
 name: DP-RPG
-version: 1.0.0.0
+version: 1.0.0.1
 main: com.darksoldier1404.dpr.DRPG
-api-version: 1.18
+api-version: 1.17
 authors: [ DEAD_POOLIO_ ]
 depend:
   - DPP-Core

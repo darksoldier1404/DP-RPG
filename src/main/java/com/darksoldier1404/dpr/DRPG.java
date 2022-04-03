@@ -27,7 +27,6 @@ public class DRPG extends JavaPlugin {
     public YamlConfiguration levels;
     public YamlConfiguration stats;
     public YamlConfiguration statsItems;
-    public YamlConfiguration seal;
     public String prefix;
     public Map<UUID, RPlayer> rplayers = new HashMap<>();
     public StatValue statValue;
@@ -53,11 +52,9 @@ public class DRPG extends JavaPlugin {
         saveResource("level.yml", false);
         saveResource("stats.yml", false);
         saveResource("statsItems.yml", false);
-        saveResource("seal.yml", false);
         levels = ConfigUtils.loadCustomData(plugin, "level");
         stats = ConfigUtils.loadCustomData(plugin, "stats");
         statsItems = ConfigUtils.loadCustomData(plugin, "statsItems");
-        seal = ConfigUtils.loadCustomData(plugin, "seal");
         statValue = new StatValue(stats);
         levelUpStatPoint = stats.getInt("Stats.LevelUpStatPoint");
         getServer().getPluginManager().registerEvents(new DREvent(), plugin);

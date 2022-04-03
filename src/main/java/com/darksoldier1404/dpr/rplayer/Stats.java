@@ -1,7 +1,6 @@
 package com.darksoldier1404.dpr.rplayer;
 
 import com.darksoldier1404.dpr.DRPG;
-import com.darksoldier1404.dpr.enums.StatsType;
 import com.darksoldier1404.dpr.events.obj.StatLevelUPEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
