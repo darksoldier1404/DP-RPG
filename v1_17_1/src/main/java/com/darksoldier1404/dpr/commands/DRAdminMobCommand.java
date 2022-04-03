@@ -2,7 +2,7 @@ package com.darksoldier1404.dpr.commands;
 
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.functions.DRAUFunction;
-import io.lumine.xikage.mythicmobs.MythicMobs;
+import io.lumine.mythic.bukkit.MythicBukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -71,7 +71,7 @@ public class DRAdminMobCommand implements CommandExecutor, TabCompleter {
             return Arrays.asList("base", "perlv");
         }
         if(args.length == 3) {
-            return MythicMobs.inst().getMobManager().getMobNames().stream().toList();
+            return MythicBukkit.inst().getMobManager().getMobNames().stream().toList();
         }
         return null;
     }

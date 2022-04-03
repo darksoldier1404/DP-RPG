@@ -9,7 +9,7 @@ tasks.withType(JavaCompile) {
 }
 
 group 'github.com/darksoldier1404'
-version = '1.0.0.0'
+version = '1.0.0.1'
 configurations {
     jar.archiveName = 'DP-RPG-_' + name + '-' + version + '.jar'
 }
@@ -26,16 +26,20 @@ repositories {
         url "http://dpp.dpnw.site:8081/repository/maven-public/"
         allowInsecureProtocol = true
     }
+    maven {
+        url "https://mvn.lumine.io/repository/maven-public/"
+    }
 }
 
 dependencies {
-    implementation 'org.jetbrains:annotations:22.0.0'
+    implementation 'org.jetbrains:annotations:23.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    compileOnly 'org.spigotmc:spigot-api:R0.1:1.16'
-    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.16'
+    compileOnly 'org.spigotmc:spigot-api:R0.1:1.16.5'
+    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.16.5'
     compileOnly 'com.darksoldier1404.dppc:DPP-Core:1.16.5-SNAPSHOT'
-    compileOnly 'io.lumine.xikage.mythicmobs:MythicMobs:4.14.2'
+    compileOnly 'io.lumine:Mythic:5.0.2'
+    compileOnly 'io.lumine:LumineUtils:1.16.1-SNAPSHOT'
 }
 
 test {

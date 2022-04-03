@@ -8,7 +8,7 @@ import com.darksoldier1404.dpr.events.obj.RPlayerExpGainEvent;
 import com.darksoldier1404.dpr.events.obj.RPlayerLevelUPEvent;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
 import com.darksoldier1404.dpr.rplayer.StatsType;
-import io.lumine.xikage.mythicmobs.MythicMobs;
+import io.lumine.mythic.bukkit.MythicBukkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -73,7 +73,7 @@ public class DRAUFunction {
     }
 
     public static void setBaseExp(CommandSender sender, String mob, String svalue) {
-        if (MythicMobs.inst().getMobManager().getMobNames().contains(mob)) {
+        if (MythicBukkit.inst().getMobManager().getMobNames().contains(mob)) {
             try {
                 double value = Double.parseDouble(svalue);
                 plugin.config.set("Mobs." + mob + ".base", value);
@@ -88,7 +88,7 @@ public class DRAUFunction {
     }
 
     public static void setPerLvExp(CommandSender sender, String mob, String svalue) {
-        if (MythicMobs.inst().getMobManager().getMobNames().contains(mob)) {
+        if (MythicBukkit.inst().getMobManager().getMobNames().contains(mob)) {
             try {
                 double value = Double.parseDouble(svalue);
                 plugin.config.set("Mobs." + mob + ".perlv", value);

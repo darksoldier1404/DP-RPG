@@ -9,7 +9,7 @@ tasks.withType(JavaCompile) {
 }
 
 group 'github.com/darksoldier1404'
-version = '1.0.0.0'
+version = '1.0.0.1'
 configurations {
     jar.archiveName = 'DP-RPG-_' + name + '-' + version + '.jar'
 }
@@ -32,8 +32,8 @@ dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    compileOnly 'org.spigotmc:spigot-api:R0.1:1.15'
-    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.15'
+    compileOnly 'org.spigotmc:spigot-api:R0.1:1.15.2'
+    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.15.2'
     compileOnly 'com.darksoldier1404.dppc:DPP-Core:1.15.2-SNAPSHOT'
     compileOnly 'io.lumine.xikage.mythicmobs:MythicMobs:4.14.2'
 }
