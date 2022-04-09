@@ -147,7 +147,7 @@ public class DRAUFunction {
         inv.setObj(readOnly);
         for (int i = 0; i < 9 * plugin.config.getInt("Settings.StatsGUILine"); i++) {
             ItemStack item = plugin.statsItems.getItemStack("ItemStack.StatsItems." + i);
-            item = item == null ? new ItemStack(Material.AIR) : item;
+            item = item == null ? new ItemStack(Material.AIR) : item.clone();
             if(NBT.hasTagKey(item, "statsType")) {
                 item = initPlaceholder(StatsType.valueOf(NBT.getStringTag(item, "statsType")), plugin.rplayers.get(p.getUniqueId()), item);
                 inv.setItem(i, item);
