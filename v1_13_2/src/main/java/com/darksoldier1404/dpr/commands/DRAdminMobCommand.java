@@ -10,6 +10,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("all")
 public class DRAdminMobCommand implements CommandExecutor, TabCompleter {
@@ -71,7 +72,7 @@ public class DRAdminMobCommand implements CommandExecutor, TabCompleter {
             return Arrays.asList("base", "perlv");
         }
         if(args.length == 3) {
-            return MythicMobs.inst().getMobManager().getMobNames().stream().toList();
+            return MythicMobs.inst().getMobManager().getMobNames().stream().collect(Collectors.toList());
         }
         return null;
     }
