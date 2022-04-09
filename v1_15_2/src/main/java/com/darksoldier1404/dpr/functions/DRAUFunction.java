@@ -28,7 +28,7 @@ public class DRAUFunction {
         RPlayer rp = plugin.rplayers.get(p.getUniqueId());
         pm.callEvent(new RPlayerLevelUPEvent(rp, rp.getLevel(), rp.getLevel() + level));
         rp.setLevel(rp.getLevel() + level);
-        rp.getStat().setPoint(rp.getStat().getPoint() + plugin.levelUpStatPoint);
+        rp.getStat().setPoint(rp.getStat().getPoint() + plugin.levelUpStatPoint * level);
     }
 
     public static void addExp(Player p, double exp) {
