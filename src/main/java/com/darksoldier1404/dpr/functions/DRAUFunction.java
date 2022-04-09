@@ -29,7 +29,7 @@ public class DRAUFunction {
         pm.callEvent(new RPlayerLevelUPEvent(rp, rp.getLevel(), rp.getLevel() + level));
         rp.setLevel(rp.getLevel() + level);
         rp.getStat().setPoint(rp.getStat().getPoint() + plugin.levelUpStatPoint * level);
-        
+
     }
 
     public static void addExp(Player p, double exp) {
@@ -147,8 +147,9 @@ public class DRAUFunction {
         DInventory inv = new DInventory(null, p.getName() + "의 스텟 정보", 9 * plugin.config.getInt("Settings.StatsGUILine"), plugin);
         inv.setObj(readOnly);
         for (int i = 0; i < 9 * plugin.config.getInt("Settings.StatsGUILine"); i++) {
-            ItemStack item = plugin.statsItems.getItemStack("ItemStack.StatsItems." + i).clone();
-            if(NBT.hasTagKey(item, "statsType")) {
+            ItemStack item = plugin.statsItems.getItemStack("ItemStack.StatsItems." + i);
+            item = item == null ? new ItemStack(Material.AIR) : item;
+            if (NBT.hasTagKey(item, "statsType")) {
                 item = initPlaceholder(StatsType.valueOf(NBT.getStringTag(item, "statsType")), plugin.rplayers.get(p.getUniqueId()), item);
                 inv.setItem(i, item);
                 continue;
@@ -159,13 +160,13 @@ public class DRAUFunction {
     }
 
     public static ItemStack initPlaceholder(StatsType type, RPlayer rp, ItemStack item) {
-        if(item.hasItemMeta()) {
-            if(!item.getItemMeta().hasLore()) return item;
+        if (item.hasItemMeta()) {
+            if (!item.getItemMeta().hasLore()) return item;
         }
         ItemMeta im = item.getItemMeta();
         im.setDisplayName(im.getDisplayName().replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
         List<String> lore = im.getLore();
-        for(int i = 0; i < lore.size(); i++) {
+        for (int i = 0; i < lore.size(); i++) {
             lore.set(i, lore.get(i).replace("<stat>", String.valueOf(rp.getStat().getStat(type))));
         }
         im.setLore(lore);

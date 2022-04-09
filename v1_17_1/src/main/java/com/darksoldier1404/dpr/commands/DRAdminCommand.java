@@ -189,7 +189,7 @@ public class DRAdminCommand implements CommandExecutor, TabCompleter {
                 return Bukkit.getOnlinePlayers().stream().map(player -> player.getName()).collect(java.util.stream.Collectors.toList());
             }
             if (args[0].equalsIgnoreCase("stat")) {
-                return Arrays.asList("display", "line", "add", "sub", "set", "check");
+                return Arrays.asList("display", "line", "add", "sub", "set", "check", "getitem");
             }
             return Arrays.asList("add", "sub", "set", "get");
         }
