@@ -122,10 +122,6 @@ public class DRAdminCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(prefix + "값을 입력해주세요.");
                 return true;
             }
-            if(args.length == 4) {
-                sender.sendMessage(prefix + "유저를 입력해주세요.");
-                return true;
-            }
             Player p = Bukkit.getPlayer(args[2]);
             if(p == null) {
                 sender.sendMessage(prefix + "해당 유저가 없습니다.");
