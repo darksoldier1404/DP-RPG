@@ -58,65 +58,65 @@ public class Stats {
         Bukkit.getServer().getPluginManager().callEvent(new StatLevelUPEvent(p, this, type));
         switch (type) {
             case HP:
-                if (point >= sv.getHpPerStat()) {
+                if (point >= sv.getHpRequireStatPoint()) {
                     hp++;
-                    point -= sv.getHpPerStat();
+                    point -= sv.getHpRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case ARMOR:
-                if (point >= sv.getArmorPerStat()) {
+                if (point >= sv.getArmorRequireStatPoint()) {
                     armor++;
-                    point -= sv.getArmorPerStat();
+                    point -= sv.getArmorRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case PROJECTILE_ARMOR:
-                if (point >= sv.getProjectileArmorPerStat()) {
+                if (point >= sv.getProjectileArmorRequireStatPoint()) {
                     projectileArmor++;
-                    point -= sv.getProjectileArmorPerStat();
+                    point -= sv.getProjectileArmorRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case DAMAGE:
-                if (point >= sv.getDamagePerStat()) {
+                if (point >= sv.getDamageRequireStatPoint()) {
                     damage++;
-                    point -= sv.getDamagePerStat();
+                    point -= sv.getDamageRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case PROJECTILE_DAMAGE:
-                if (point >= sv.getProjectileDamagePerStat()) {
+                if (point >= sv.getProjectileDamageRequireStatPoint()) {
                     projectileDamage++;
-                    point -= sv.getProjectileDamagePerStat();
+                    point -= sv.getProjectileDamageRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case CRITICAL_CHANCE:
-                if (point >= sv.getCriticalChancePerStat()) {
+                if (point >= sv.getCriticalChanceRequireStatPoint()) {
                     criticalChance++;
-                    point -= sv.getCriticalChancePerStat();
+                    point -= sv.getCriticalChanceRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case CRITICAL_DAMAGE:
-                if (point >= sv.getCriticalDamagePerStat()) {
+                if (point >= sv.getCriticalDamageRequireStatPoint()) {
                     criticalDamage++;
-                    point -= sv.getCriticalDamagePerStat();
+                    point -= sv.getCriticalDamageRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case SPEED:
-                if (point >= sv.getSpeedPerStat()) {
+                if (point >= sv.getSpeedRequireStatPoint()) {
                     speed++;
-                    point -= sv.getSpeedPerStat();
+                    point -= sv.getSpeedRequireStatPoint();
                     playSound(p);
                     return;
                 }
             case LIFESTEAL:
-                if (point >= sv.getLifeStealPerStat()) {
+                if (point >= sv.getLifeStealRequireStatPoint()) {
                     lifeSteal++;
-                    point -= sv.getLifeStealPerStat();
+                    point -= sv.getLifeStealRequireStatPoint();
                     playSound(p);
                     return;
                 }
