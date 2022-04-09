@@ -16,6 +16,7 @@ public class PlayerDamageEvent implements Listener {
     @EventHandler
     public void onDamaged(EntityDamageByEntityEvent e) {
         if(!(e.getEntity() instanceof Player)) return;
+        if(e.getEntity().hasMetadata("NPC")) return;
         Player p = (Player) e.getEntity();
         Entity damager = e.getDamager();
         if(damager instanceof Projectile) {
@@ -36,6 +37,7 @@ public class PlayerDamageEvent implements Listener {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent e) {
+        if(e.getEntity().hasMetadata("NPC")) return;
         if(e.getDamager() instanceof Projectile) {
             Projectile pj = (Projectile) e.getDamager();
             if(pj.getShooter() instanceof Player) {
