@@ -146,7 +146,8 @@ public class DRAUFunction {
         DInventory inv = new DInventory(null, p.getName() + "의 스텟 정보", 9 * plugin.config.getInt("Settings.StatsGUILine"), plugin);
         inv.setObj(readOnly);
         for (int i = 0; i < 9 * plugin.config.getInt("Settings.StatsGUILine"); i++) {
-            ItemStack item = plugin.statsItems.getItemStack("ItemStack.StatsItems." + i).clone();
+            ItemStack item = plugin.statsItems.getItemStack("ItemStack.StatsItems." + i);
+            item = item == null ? new ItemStack(Material.AIR) : item;
             if(NBT.hasTagKey(item, "statsType")) {
                 item = initPlaceholder(StatsType.valueOf(NBT.getStringTag(item, "statsType")), plugin.rplayers.get(p.getUniqueId()), item);
                 inv.setItem(i, item);
