@@ -47,7 +47,7 @@ public class Stats {
     public void init(Player p) {
         StatValue sv = DRPG.getInstance().statValue;
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue() + (hp * sv.getHpPerStat()));
-        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getDefaultValue() + (sv.getSpeedPerStat() * speed));
+        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1 + (sv.getSpeedPerStat() * speed));
     }
 
     public void playSound(Player p) {
