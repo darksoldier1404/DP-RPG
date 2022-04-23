@@ -1,5 +1,6 @@
 package com.darksoldier1404.dpr.commands;
 
+import com.darksoldier1404.dppc.utils.DataContainer;
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.functions.DRAUFunction;
 import org.bukkit.command.Command;
@@ -12,21 +13,21 @@ import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class DRUserCommand implements CommandExecutor, TabCompleter {
-    private final DRPG plugin = DRPG.getInstance();
-    private final String prefix = plugin.prefix;
+public class DPRUserCommand implements CommandExecutor, TabCompleter {
+    private static final DRPG plugin = DRPG.getInstance();
+    private static final DataContainer data = plugin.data;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(prefix + "인게임에서만 사용할 수 있습니다.");
+            sender.sendMessage(data.getPrefix() + "인게임에서만 사용할 수 있습니다.");
             return false;
         }
         Player p = (Player) sender;
         if (args.length == 0) {
-            p.sendMessage(prefix + "/스텟 오픈 : 스텟창을 엽니다.");
-            p.sendMessage(prefix + "/스텟 오픈 <닉네임> : 다른 유저의 스텟창을 엽니다. (읽기 전용)");
-            p.sendMessage(prefix + "/스텟 공개 : 다른 유저가 자신의 스텟 정보를 볼 수 있도록 설정합니다. (토글)");
+            p.sendMessage(data.getPrefix() + "/스텟 오픈 : 스텟창을 엽니다.");
+            p.sendMessage(data.getPrefix() + "/스텟 오픈 <닉네임> : 다른 유저의 스텟창을 엽니다. (읽기 전용)");
+            p.sendMessage(data.getPrefix() + "/스텟 공개 : 다른 유저가 자신의 스텟 정보를 볼 수 있도록 설정합니다. (토글)");
             return false;
         }
         if (args[0].equals("오픈")) {
@@ -35,7 +36,7 @@ public class DRUserCommand implements CommandExecutor, TabCompleter {
             } else if (args.length == 2) {
                 Player target = plugin.getServer().getPlayer(args[1]);
                 if (target == null) {
-                    p.sendMessage(prefix + "해당 닉네임을 가진 유저가 없습니다.");
+                    p.sendMessage(data.getPrefix() + "해당 닉네임을 가진 유저가 없습니다.");
                     return false;
                 }
                 DRAUFunction.openStatGUI(target, true);
