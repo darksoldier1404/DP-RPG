@@ -1,20 +1,40 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'com.darksoldier1404'
-version = '1.0.0.4'
+version = '1.0.0.5'
+configurations {
+    jar.archiveName = 'DP-RPG-_v1_18_2-'+ version +'.jar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.darksoldier1404.dpr'
+            artifactId = this.name
+            version = '1.18.2-' + this.version
+            artifact 'jars/'+ jar.archiveName
+        }
+    }
+    repositories {
+        maven {
+            url "http://dpp.dpnw.site:8081/repository/maven-releases/"
+            allowInsecureProtocol = true
+        }
+    }
+}
 
 compileJava.options.encoding = 'UTF-8'
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
-configurations {
-    jar.archiveName = 'DP-RPG-_v1_18_2-'+ version +'.jar'
-}
 build {
     sourceCompatibility = 17
     targetCompatibility = 17
+}
+jar{
+    destinationDirectory.set(file("$rootDir/jars"))
 }
 task DS_BUILD {
     doFirst {

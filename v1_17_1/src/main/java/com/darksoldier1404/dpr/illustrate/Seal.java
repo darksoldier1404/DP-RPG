@@ -1,4 +1,4 @@
-package com.darksoldier1404.dpr.seal;
+package com.darksoldier1404.dpr.illustrate;
 
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.enums.SealType;

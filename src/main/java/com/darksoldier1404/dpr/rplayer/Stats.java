@@ -1,6 +1,7 @@
 package com.darksoldier1404.dpr.rplayer;
 
 import com.darksoldier1404.dpr.DRPG;
+import com.darksoldier1404.dpr.enums.StatsType;
 import com.darksoldier1404.dpr.events.obj.StatLevelUPEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -121,7 +122,7 @@ public class Stats {
                     return;
                 }
         }
-        p.sendMessage(DRPG.getInstance().prefix + "스텟 포인트가 부족합니다.");
+        p.sendMessage(DRPG.data.getPrefix() + "스텟 포인트가 부족합니다.");
     }
 
     public int getStat(StatsType type) {
