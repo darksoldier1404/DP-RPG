@@ -1,17 +1,16 @@
 package com.darksoldier1404.dpr.events;
 
-import com.darksoldier1404.dppc.api.inventory.DInventory;
 import com.darksoldier1404.dppc.utils.ConfigUtils;
 import com.darksoldier1404.dppc.utils.DataContainer;
 import com.darksoldier1404.dppc.utils.NBT;
 import com.darksoldier1404.dpr.DRPG;
+import com.darksoldier1404.dpr.enums.StatsType;
 import com.darksoldier1404.dpr.events.obj.RPlayerExpGainEvent;
 import com.darksoldier1404.dpr.events.obj.RPlayerLevelUPEvent;
 import com.darksoldier1404.dpr.events.obj.StatLevelUPEvent;
 import com.darksoldier1404.dpr.functions.DRASFunction;
 import com.darksoldier1404.dpr.functions.DRAUFunction;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
-import com.darksoldier1404.dpr.enums.StatsType;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -19,11 +18,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.Map;
 import java.util.UUID;
@@ -72,12 +74,18 @@ public class DREvent implements Listener {
             Player p = (Player) e.getKiller();
             double level = e.getMobLevel();
             double base = data.getConfig().getDouble("Mobs." + e.getMobType().getInternalName() + ".base");
-            if (base == 0) return;
-            double perlv = data.getConfig().getDouble("Mobs." + e.getMobType().getInternalName() + ".perlv");
-            if (perlv == 0) {
-                DRAUFunction.addExp(p, base);
-            } else {
-                DRAUFunction.addExp(p, base + level * perlv);
+            if (base != 0) {
+                double perlv = data.getConfig().getDouble("Mobs." + e.getMobType().getInternalName() + ".perlv");
+                if (perlv == 0) {
+                    DRAUFunction.addExp(p, base);
+                } else {
+                    DRAUFunction.addExp(p, base + level * perlv);
+                }
+            }
+            if(DRAUFunction.hasIllustrate(e.getMobType().getInternalName())) {
+                if(DRAUFunction.getCalcChance(e.getMobType().getInternalName())) {
+                    e.getDrops().add(DRAUFunction.getIllustratePeice(e.getMobType().getInternalName()));
+                }
             }
         }
     }
@@ -107,31 +115,48 @@ public class DREvent implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e) {
-        if (e.getInventory() instanceof DInventory) {
-            DInventory inv = (DInventory) e.getInventory();
-            if (inv.isValidHandler(plugin)) {
-                if (e.getView().getTitle().equals("스텟 아이템 설정")) {
-                    DRAUFunction.saveStatsItemSettings((Player) e.getPlayer(), inv);
+        if (e.getView().getTitle().contains("스텟 아이템 설정")) {
+            DRAUFunction.saveStatsItemSettings((Player) e.getPlayer(), e.getInventory());
+        }
+        if(e.getView().getTitle().contains("스텟 정보")) {
+            DRAUFunction.currentOpenedisReadOnly.remove(e.getPlayer().getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        if (e.getView().getTitle().contains("도감 정보")) {
+            e.setCancelled(true);
+            if (e.getCurrentItem() != null) {
+                if (NBT.hasTagKey(e.getCurrentItem(), "dpri_prize_btn")) {
+                    DRAUFunction.recivePrize((Player) e.getWhoClicked(), e.getCurrentItem());
+                    return;
+                }
+            }
+            return;
+        }
+        if (e.getView().getTitle().contains("스텟 정보")) {
+            e.setCancelled(true);
+            if (DRAUFunction.currentOpenedisReadOnly.get(e.getWhoClicked().getUniqueId())) return;
+            if (e.getCurrentItem() != null) {
+                if (NBT.hasTagKey(e.getCurrentItem(), "statsType")) {
+                    StatsType type = StatsType.valueOf(NBT.getStringTag(e.getCurrentItem(), "statsType"));
+                    if(DRASFunction.addStat(type, (Player) e.getWhoClicked())) {
+                        DRAUFunction.updateStat((Player) e.getWhoClicked(), e.getInventory());
+                    }
                 }
             }
         }
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        if (e.getInventory() instanceof DInventory) {
-            DInventory inv = (DInventory) e.getInventory();
-            if (inv.isValidHandler(plugin)) {
-                if (e.getView().getTitle().contains("스텟 정보")) {
+    public void onInteract(PlayerInteractEvent e) {
+        if(e.getHand() == EquipmentSlot.OFF_HAND) return;
+        if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if(e.getItem() != null) {
+                if(NBT.hasTagKey(e.getItem(), "dpri")) {
+                    DRAUFunction.addIllustrate(e.getPlayer(), e.getItem());
                     e.setCancelled(true);
-                    if ((boolean) inv.getObj()) return;
-                    if (e.getCurrentItem() != null) {
-                        if (NBT.hasTagKey(e.getCurrentItem(), "statsType")) {
-                            StatsType type = StatsType.valueOf(NBT.getStringTag(e.getCurrentItem(), "statsType"));
-                            DRASFunction.addStat(type, (Player) e.getWhoClicked());
-                            DRAUFunction.openStatGUI((Player) e.getWhoClicked(), (boolean) inv.getObj());
-                        }
-                    }
                 }
             }
         }

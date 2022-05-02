@@ -1,5 +1,6 @@
 package com.darksoldier1404.dpr.events;
 
+import com.darksoldier1404.dppc.utils.DataContainer;
 import com.darksoldier1404.dpr.DRPG;
 import com.darksoldier1404.dpr.rplayer.RPlayer;
 import org.bukkit.entity.Entity;
@@ -9,9 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.util.Map;
+import java.util.UUID;
+
 @SuppressWarnings("all")
 public class PlayerDamageEvent implements Listener {
-    private final DRPG plugin = DRPG.getInstance();
+    private static final DRPG plugin = DRPG.getInstance();
+    private static final DataContainer data = plugin.data;
 
     @EventHandler
     public void onDamaged(EntityDamageByEntityEvent e) {
@@ -21,13 +26,13 @@ public class PlayerDamageEvent implements Listener {
         Entity damager = e.getDamager();
         if(damager instanceof Projectile) {
             Projectile pj = (Projectile) damager;
-            RPlayer rp = plugin.rplayers.get(p.getUniqueId());
+            RPlayer rp = ((Map<UUID, RPlayer>) data.get("rplayers")).get(p.getUniqueId());
             int stat = rp.getStat().getProjectileArmor();
             if(stat == 0) return;
             double pArmor = plugin.statValue.getProjectileArmorPerStat()*stat;
             e.setDamage(e.getDamage() - pArmor);
         }else{
-            RPlayer rp = plugin.rplayers.get(p.getUniqueId());
+            RPlayer rp = ((Map<UUID, RPlayer>) data.get("rplayers")).get(p.getUniqueId());
             int stat = rp.getStat().getArmor();
             if(stat == 0) return;
             double pArmor = plugin.statValue.getArmorPerStat()*stat;
@@ -42,7 +47,7 @@ public class PlayerDamageEvent implements Listener {
             Projectile pj = (Projectile) e.getDamager();
             if(pj.getShooter() instanceof Player) {
                 Player p = (Player) pj.getShooter();
-                RPlayer rp = plugin.rplayers.get(p.getUniqueId());
+                RPlayer rp = ((Map<UUID, RPlayer>) data.get("rplayers")).get(p.getUniqueId());
                 int stat = rp.getStat().getProjectileDamage();
                 if(stat == 0) return;
                 double pDamage = plugin.statValue.getProjectileDamagePerStat()*stat;
@@ -54,7 +59,7 @@ public class PlayerDamageEvent implements Listener {
         }
         if((e.getDamager() instanceof Player)) {
             Player p = (Player) e.getDamager();
-            RPlayer rp = plugin.rplayers.get(p.getUniqueId());
+            RPlayer rp = ((Map<UUID, RPlayer>) data.get("rplayers")).get(p.getUniqueId());
             int stat = rp.getStat().getDamage();
             if(stat == 0) return;
             double pDamage = plugin.statValue.getDamagePerStat()*stat;

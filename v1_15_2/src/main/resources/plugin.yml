@@ -1,5 +1,5 @@
 name: DP-RPG
-version: 1.0.0.4
+version: 1.1.0.9
 main: com.darksoldier1404.dpr.DRPG
 api-version: 1.15
 authors: [ DEAD_POOLIO_ ]
@@ -10,14 +10,32 @@ commands:
   dpra:
     permission: dpr.admin
     description: "DP-RPG Admin Command"
-    usage: /dpra
     aliases: [ dpradmin ]
+  dprl:
+    permission: dpr.admin
+    description: "DP-RPG Admin Level Command"
+    aliases: [ dprlevel ]
+  dpre:
+    permission: dpr.admin
+    description: "DP-RPG Admin Exp Command"
+    aliases: [ dprexp ]
+  dprs:
+    permission: dpr.admin
+    description: "DP-RPG Admin Stat Command"
+    aliases: [ dprstat ]
   dprm:
     permission: dpr.admin
     description: "DP-RPG Mob Setting Command"
-    usage: /dprm
     aliases: [ dprmob ]
+  dpri:
+    permission: dpr.admin
+    description: "DP-RPG Mob Illustrate Command"
+    aliases: [ dprillustrate ]
   dstats:
+    permission: dpr.stats
     description: "DP-RPG Stats Command"
-    usage: /dstats
     aliases: [ 스텟 ]
+  dillustrate:
+    permission: dpr.illustrate
+    description: "DP-RPG Mob Illustrate Command"
+    aliases: [ 도감 ]

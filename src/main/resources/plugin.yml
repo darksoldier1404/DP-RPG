@@ -1,7 +1,7 @@
 name: DP-RPG
-version: 1.0.0.5
+version: 1.1.0.9
 main: com.darksoldier1404.dpr.DRPG
-api-version: 1.17
+api-version: 1.18
 authors: [ DEAD_POOLIO_ ]
 depend:
   - DPP-Core
@@ -32,5 +32,10 @@ commands:
     description: "DP-RPG Mob Illustrate Command"
     aliases: [ dprillustrate ]
   dstats:
+    permission: dpr.stats
     description: "DP-RPG Stats Command"
     aliases: [ 스텟 ]
+  dillustrate:
+    permission: dpr.illustrate
+    description: "DP-RPG Mob Illustrate Command"
+    aliases: [ 도감 ]
