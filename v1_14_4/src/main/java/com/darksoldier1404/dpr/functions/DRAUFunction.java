@@ -382,9 +382,9 @@ public class DRAUFunction {
 
     public static void reloadConfigs() {
         data.reload();
-        data.set("levels", ConfigUtils.reloadPluginConfig(plugin, ((YamlConfiguration) data.get("levels"))));
-        data.set("stats", ConfigUtils.reloadPluginConfig(plugin, ((YamlConfiguration) data.get("stats"))));
-        data.set("statsItems", ConfigUtils.reloadPluginConfig(plugin, ((YamlConfiguration) data.get("statsItems"))));
+        data.set("levels", ConfigUtils.loadCustomData(plugin, "levels"));
+        data.set("stats", ConfigUtils.loadCustomData(plugin, "stats"));
+        data.set("statsItems", ConfigUtils.loadCustomData(plugin, "statsItems"));
     }
 
     public static void saveConfigs() {
