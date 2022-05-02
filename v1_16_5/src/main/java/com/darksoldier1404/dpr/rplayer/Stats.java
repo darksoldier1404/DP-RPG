@@ -1,6 +1,7 @@
 package com.darksoldier1404.dpr.rplayer;
 
 import com.darksoldier1404.dpr.DRPG;
+import com.darksoldier1404.dpr.enums.StatsType;
 import com.darksoldier1404.dpr.events.obj.StatLevelUPEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -54,7 +55,7 @@ public class Stats {
         p.getWorld().playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 1, 1);
     }
 
-    public void addStat(StatsType type, Player p) {
+    public boolean addStat(StatsType type, Player p) {
         Bukkit.getServer().getPluginManager().callEvent(new StatLevelUPEvent(p, this, type));
         switch (type) {
             case HP:
@@ -62,66 +63,193 @@ public class Stats {
                     hp++;
                     point -= sv.getHpRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case ARMOR:
                 if (point >= sv.getArmorRequireStatPoint()) {
                     armor++;
                     point -= sv.getArmorRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case PROJECTILE_ARMOR:
                 if (point >= sv.getProjectileArmorRequireStatPoint()) {
                     projectileArmor++;
                     point -= sv.getProjectileArmorRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case DAMAGE:
                 if (point >= sv.getDamageRequireStatPoint()) {
                     damage++;
                     point -= sv.getDamageRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case PROJECTILE_DAMAGE:
                 if (point >= sv.getProjectileDamageRequireStatPoint()) {
                     projectileDamage++;
                     point -= sv.getProjectileDamageRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case CRITICAL_CHANCE:
                 if (point >= sv.getCriticalChanceRequireStatPoint()) {
                     criticalChance++;
                     point -= sv.getCriticalChanceRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case CRITICAL_DAMAGE:
                 if (point >= sv.getCriticalDamageRequireStatPoint()) {
                     criticalDamage++;
                     point -= sv.getCriticalDamageRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case SPEED:
                 if (point >= sv.getSpeedRequireStatPoint()) {
                     speed++;
                     point -= sv.getSpeedRequireStatPoint();
                     playSound(p);
-                    return;
+                    return true;
                 }
             case LIFESTEAL:
                 if (point >= sv.getLifeStealRequireStatPoint()) {
                     lifeSteal++;
                     point -= sv.getLifeStealRequireStatPoint();
                     playSound(p);
+                    return true;
+                }
+        }
+        p.sendMessage(DRPG.data.getPrefix() + "스텟 포인트가 부족합니다.");
+        return false;
+    }
+
+    public void subStat(StatsType type, Player p) {
+        switch (type) {
+            case HP:
+                if (hp > 0) {
+                    hp--;
+                    point += sv.getHpRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case ARMOR:
+                if (armor > 0) {
+                    armor--;
+                    point += sv.getArmorRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case PROJECTILE_ARMOR:
+                if (projectileArmor > 0) {
+                    projectileArmor--;
+                    point += sv.getProjectileArmorRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case DAMAGE:
+                if (damage > 0) {
+                    damage--;
+                    point += sv.getDamageRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case PROJECTILE_DAMAGE:
+                if (projectileDamage > 0) {
+                    projectileDamage--;
+                    point += sv.getProjectileDamageRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case CRITICAL_CHANCE:
+                if (criticalChance > 0) {
+                    criticalChance--;
+                    point += sv.getCriticalChanceRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case CRITICAL_DAMAGE:
+                if (criticalDamage > 0) {
+                    criticalDamage--;
+                    point += sv.getCriticalDamageRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case SPEED:
+                if (speed > 0) {
+                    speed--;
+                    point += sv.getSpeedRequireStatPoint();
+                    playSound(p);
+                    return;
+                }
+            case LIFESTEAL:
+                if (lifeSteal > 0) {
+                    lifeSteal--;
+                    point += sv.getLifeStealRequireStatPoint();
+                    playSound(p);
                     return;
                 }
         }
-        p.sendMessage(DRPG.getInstance().prefix + "스텟 포인트가 부족합니다.");
+    }
+
+    public void subStatWithoutPointReturn(StatsType type, Player p) {
+        switch (type) {
+            case HP:
+                if (hp > 0) {
+                    hp--;
+                    return;
+                }
+            case ARMOR:
+                if (armor > 0) {
+                    armor--;
+                    playSound(p);
+                    return;
+                }
+            case PROJECTILE_ARMOR:
+                if (projectileArmor > 0) {
+                    projectileArmor--;
+                    playSound(p);
+                    return;
+                }
+            case DAMAGE:
+                if (damage > 0) {
+                    damage--;
+                    playSound(p);
+                    return;
+                }
+            case PROJECTILE_DAMAGE:
+                if (projectileDamage > 0) {
+                    projectileDamage--;
+                    playSound(p);
+                    return;
+                }
+            case CRITICAL_CHANCE:
+                if (criticalChance > 0) {
+                    criticalChance--;
+                    playSound(p);
+                    return;
+                }
+            case CRITICAL_DAMAGE:
+                if (criticalDamage > 0) {
+                    criticalDamage--;
+                    playSound(p);
+                    return;
+                }
+            case SPEED:
+                if (speed > 0) {
+                    speed--;
+                    playSound(p);
+                    return;
+                }
+            case LIFESTEAL:
+                if (lifeSteal > 0) {
+                    lifeSteal--;
+                    playSound(p);
+                    return;
+                }
+        }
     }
 
     public int getStat(StatsType type) {
