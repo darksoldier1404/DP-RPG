@@ -41,8 +41,10 @@ public class DPRAdminStatCommand implements CommandExecutor, TabCompleter {
             if (args.length == 2) {
                 try {
                     int line = Integer.parseInt(args[1]);
-                    if (line <= 1 || line >= 6) {
+                    // line should be between 1 and 6
+                    if (line >= 1 && line <= 6) {
                         data.getConfig().set("Settings.StatsGUILine", line);
+                        sender.sendMessage(data.getPrefix() + "Done!");
                         return false;
                     } else {
                         sender.sendMessage(data.getPrefix() + data.getLang().get("cmd_dprs_line_should_be_1_to_6"));
