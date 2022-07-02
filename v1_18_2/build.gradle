@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+}
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.javaModuleVersion = '1.8'
+}
+
+group 'github.com/darksoldier1404'
+version = '1.1.0.10'
+configurations {
+    jar.archiveName = 'DP-RPG-_' + name + '-' + version + '.jar'
+}
+build {
+    sourceCompatibility = 17
+    targetCompatibility = 17
+}
+jar{
+    destinationDirectory.set(file("$rootDir/jars"))
+}
+repositories {
+    mavenCentral()
+    maven {
+        url "http://dpp.dpnw.site:8081/repository/maven-public/"
+        allowInsecureProtocol = true
+    }
+    maven {
+        url "https://mvn.lumine.io/repository/maven-public/"
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:22.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    compileOnly 'org.spigotmc:spigot-api:R0.1:1.18.2'
+    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.18.2'
+    compileOnly 'com.darksoldier1404.dppc:DPP-Core:1.18.2-SNAPSHOT'
+    compileOnly 'io.lumine:Mythic:5.0.2'
+    compileOnly 'io.lumine:LumineUtils:1.16.1-SNAPSHOT'
+}
+
+test {
+    useJUnitPlatform()
+}

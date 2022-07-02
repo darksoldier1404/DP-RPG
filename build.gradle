@@ -1,28 +1,11 @@
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
 group 'com.darksoldier1404'
-version = '1.1.0.10'
+version = '1.1.0.11'
 configurations {
-    jar.archiveName = 'DP-RPG-_v1_18_2-'+ version +'.jar'
-}
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = 'com.darksoldier1404.dpr'
-            artifactId = this.name
-            version = '1.18.2-' + this.version
-            artifact 'jars/'+ jar.archiveName
-        }
-    }
-    repositories {
-        maven {
-            url "http://dpp.dpnw.site:8081/repository/maven-releases/"
-            allowInsecureProtocol = true
-        }
-    }
+    jar.archiveName = 'DP-RPG-_v1_19-'+ version +'.jar'
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -88,9 +71,9 @@ dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.18.2'
-    compileOnly 'org.spigotmc:spigot-api:R0.1:1.18.2'
-    compileOnly 'com.darksoldier1404.dppc:DPP-Core:1.18.2-SNAPSHOT'
+    compileOnly 'org.bukkit.craftbukkit:craftbukkit:R0.1:1.19'
+    compileOnly 'org.spigotmc:spigot-api:R0.1:1.19'
+    compileOnly 'com.darksoldier1404.dppc:DPP-Core:1.19-SNAPSHOT'
     compileOnly 'io.lumine:Mythic:5.0.2'
     compileOnly 'io.lumine:LumineUtils:1.16.1-SNAPSHOT'
 }

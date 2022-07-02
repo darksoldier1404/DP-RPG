@@ -1,0 +1,9 @@
+Settings:
+  Lang: Korean
+  prefix: "&f[ &eDPR &f] "
+  StatsGUILine: 6
+
+Mobs:
+  TestMob:
+    base: 100
+    perlv: 50
