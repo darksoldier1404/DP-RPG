@@ -1,5 +1,6 @@
 package com.darksoldier1404.dpr.functions;
 
+import com.darksoldier1404.dppc.api.inventory.DInventory;
 import com.darksoldier1404.dppc.utils.ConfigUtils;
 import com.darksoldier1404.dppc.utils.DataContainer;
 import com.darksoldier1404.dppc.utils.NBT;
@@ -31,8 +32,8 @@ public class DRAUFunction {
     private static final DataContainer data = plugin.data;
     private static final Map<UUID, RPlayer> rplayers = (Map<UUID, RPlayer>) data.get("rplayers");
     private static final PluginManager pm = Bukkit.getPluginManager();
-
     public static final Map<UUID, Boolean> currentOpenedisReadOnly = new HashMap<>();
+    public static final Map<UUID, DInventory> currentInv = new HashMap<>();
 
     public static void addLevel(Player p, int level) {
         RPlayer rp = ((Map<UUID, RPlayer>) data.get("rplayers")).get(p.getUniqueId());
