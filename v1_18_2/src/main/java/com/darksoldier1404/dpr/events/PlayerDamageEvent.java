@@ -76,7 +76,7 @@ public class PlayerDamageEvent implements Listener {
         double critChance = crit/100;
         double random = Math.random();
         if(random <= critChance) {
-            damage = damage*plugin.statValue.getCriticalDamagePerStat();
+            damage = damage * (1 + plugin.statValue.getCriticalDamagePerStat());
         }
         return damage;
     }
